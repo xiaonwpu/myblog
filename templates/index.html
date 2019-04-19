@@ -1,0 +1,228 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页_肖原个人博客 - 一个站在web前端设计之路的女技术员个人博客网站</title>
+<meta name="keywords" content="个人博客,肖原个人博客,个人博客模板,肖原" />
+<meta name="description" content="肖原个人博客，xxxxxxxxxxxxxxxxxxxxxxxxxxxx板免费资源下载的个人原创网站。" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{%  static 'css/base.css' %}" rel="stylesheet">
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+<link href="{% static 'css/m.css' %}" rel="stylesheet">
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+<script src="{% static 'js/page.js' %}"></script>
+</head>
+<body>
+<header>
+  <div id="mnav">
+    <div class="logo"><a href="/">肖原个人博客</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+      <li><a href="index.html">网站首页</a></li>
+      <li><a href="about.html">关于我</a></li>
+      <li><a href="share.html">模板分享</a></li>
+      <li><a href="list.html">学无止境</a></li>
+      <li><a href="show.html">慢生活</a></li>
+      <li><a href="shareinfo.html">模板内容页</a></li>
+      <li><a href="gbook.html">留言</a></li>
+    </ul>
+  </div>
+  <script>
+window.onload = function ()
+{
+	var oH2 = document.getElementById("mnavh"); 
+	var oUl = document.getElementById("starlist");  
+	oH2.onclick = function ()
+	{
+		var style = oUl.style;
+		style.display = style.display == "block" ? "none" : "block";
+		oH2.className = style.display == "block" ? "open" : ""
+	}
+}
+</script> 
+</header>
+
+
+
+<div class="line46"></div>
+<article>
+  <div class="pics">
+    <ul>
+      <li><i><a href="/"><img src="{% static 'images/t01.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+      <li><i><a href="/"><img src="{% static 'images/t04.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+      <li><i><a href="/"><img src="{% static 'images/t03.jpg' %}"></a></i><span>这组图片中的静物等非常的日系</span></li>
+    </ul>
+  </div>
+  <div class="blank"></div>
+  <div class="leftbox">
+    <div class="tuijian">
+      <h2 class="hometitle"><span><a href="/">模板分享</a><a href="/">学无止境</a><a href="/">慢生活</a><a href="/">热门标签</a></span>特别推荐</h2>
+
+        {% for t in tui %}
+            <li>
+                <div class="tpic">
+                    <img src="media/{{ t.img }}" srcset="media/{{ t.img }}" alt="{{ t.title }}" class="wp-post-image" width="240" height="160"/>
+                </div>
+                    <b>{{ t.title }}</b><span>{{t.excerpt}}</span><a href="{% url 'index' %}show-{{ t.id }}.html" title="{{ t.title }}" class="readmore">
+                        阅读原文
+                    </a>
+            </li>
+
+{% endfor %}
+
+    </div>
+    <div class="newblogs">
+      <h2 class="hometitle">最新文章</h2>
+        <ul id="list" style="display:none;">
+                {% for a in allarticle %}
+            <li>
+                <h3 class="blogtitle">
+                    <a href="{% url 'index' %}show-{{ t.id }}.html" target="_blank" >{{ a.title }}</a>
+                </h3>
+          <div class="bloginfo">
+              <span class="blogpic">
+                 <a href="{% url 'index' %}show-{{ t.id }}.html" title=""><img src="media/{{ a.img }}"  />
+                </a>
+              </span>
+            <p>
+               {{ a.excerpt }}
+            </p>
+          </div>
+          <div class="autor"><span class="lm f_l">
+              <a href="/">肖原个人博客</a></span>
+              <span class="dtime f_l">{{ a.created_time }}</span>
+              <span class="viewnum f_l">浏览（<a href="/">{{ a.views }}</a>）</span>
+              <span class="pingl f_l">喜欢（<a href="/">{{ a.views }}</a>）</span>
+              <span class="f_r"><a href="{% url 'index' %}show-{{ a.id }}.html" class="more">阅读原文</a></span>
+          </div>
+
+            {% endfor %}
+        </ul>
+
+      <ul id="list2">
+           {% if show.has_previous %}
+        <li class="prev-page"><a href="?page={{ list.previous_page_number }}">上一页</a></li>
+        {% else %}
+         <li class="prev-page"></li>
+        {% endif %}
+
+
+            {% for num in show.paginator.page_range %}
+                {% if num %}
+                    {% ifequal num list.number %}
+                        <li class="active"><span>{{ num }}</span></li>
+                    {% else %}
+                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                    {% endifequal %}
+                {% else %}
+                    <li class="disabled"><span>...</span></li>
+                {% endif %}
+            {% endfor %}
+
+
+            {% if list.has_next %}
+                <li class="next-page"><a href="?page={{ show.next_page_number }}">下一页</a></li>
+            {% else %}
+                <li class="prev-page"></li>
+            {% endif %}
+      </ul>
+      <script src="{% static 'js/page2.js' %}"></script>
+
+    </div>
+  </div>
+  <div class="rightbox">
+    <div class="aboutme">
+      <h2 class="ab_title">关于我</h2>
+      <div class="avatar"><img src="{% static 'images/b04.jpg' %}" /></div>
+      <div class="ab_con">
+        <p>网名：Luck.XL </p>
+        <p>职业：高级测试工程师 </p>
+        <p>籍贯：四川省―成都市</p>
+        <p>邮箱：xiaonwpu@163.com</p>
+      </div>
+    </div>
+    <div class="blank"></div>
+
+{%csrf_token%}
+    <div class="search">
+      <form action="/s?search={{ ss }}" method="get" name="searchform" id="searchform">
+        <input name="search" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+{#        <input name="show" value="title" type="hidden">#}
+{#        <input name="tempid" value="1" type="hidden">#}
+{#        <input name="tbname" value="news" type="hidden">#}
+{#          <input name="search" id="keyboard" class="input_text">#}
+        <input name="Submit" class="input_submit" value="搜索" type="submit">
+      </form>
+    </div>
+
+
+
+
+    <div class="paihang">
+      <h2 class="ab_title"><a href="/">点击排行</a></h2>
+        <ul>
+        {% for k in remen %}
+            <li>
+                <b>
+                    <a href="{% url 'index' %}show-{{ k.id }}.html" target="_blank">{{ k.title }}</a>
+                </b>
+                <p>
+                    <i>
+                        <img src="media/{{ k.img }}" >
+                    </i>
+                    {{ k.excerpt }}
+                </p>
+            </li>
+        {% endfor %}
+        </ul>
+
+
+
+
+
+
+
+
+
+{#      <ul>#}
+{#        <li><b><a href="/jstt/css3/2018-03-20/808.html" target="_blank">十条设计原则教你学会如何设计网页布局!...</a></b>#}
+{#          <p><i><img src="{% static 'images/b01.png' %}"></i>网页常见的布局有很多种,单列布局,多列布局.其中单列布局是国外很多网站比较常用的.咱们很多站长以及门户...</p>#}
+{#        </li>#}
+{#        <li><b><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></b>#}
+{#          <p><i><img src="{% static 'images/b02.jpg' %}"></i>对于刚毕业的学生来说，想学习建网站，掌握一技之长，最简单的入门...</p>#}
+{#        </li>#}
+{#        <li><b><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码</a></b>#}
+{#          <p><i><img src="{% static 'images/b03.jpg' %}"></i>先前发表过一篇文章《如果要学习web前端开发，需要学习什么？》</p>#}
+{#        </li>#}
+{#        <li><b><a href="/" target="_blank">手机的16个惊人小秘密，据说99.999%的人都不知</a></b>#}
+{#          <p><i><img src="{% static 'images/b04.jpg' %}"></i>对于刚毕业的学生来说，.需要学习什么？》</p>#}
+{#        </li>#}
+{#        <li><b><a href="/" target="_blank">你面对的是生活而不是手机</a></b>#}
+{#          <p><i><img src="{% static 'images/b05.jpg' %}"></i>最简单的入门无非就是学会html和css，先前发表过一篇文章...</p>#}
+{#        </li>#}
+{#      </ul>#}
+    </div>
+    <div class="links">
+      <h2 class="ab_title">友情链接</h2>
+      <ul>
+        <li><a href="/">肖原个人博客</a></li>
+        <li><a href="/">个人博客模板</a></li>
+        <li><a href="/">优秀个人博客</a></li>
+      </ul>
+    </div>
+    <div class="weixin">
+      <h2 class="ab_title">微信关注</h2>
+      <ul>
+        <img src="{% static 'images/wx.jpg' %}">
+      </ul>
+    </div>
+  </div>
+</article>
+<footer>
+  <p>Design by <a href="/">肖原个人博客</a> <a href="/">蜀ICP备11002373号-1</a></p>
+</footer>
+</body>
+</html>
